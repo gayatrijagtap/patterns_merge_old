@@ -1,7 +1,7 @@
 const insertChar = function(width,startChar,midChar,endChar) {
   let repeatedCharArray = [];
   repeatedCharArray[0] = [startChar];
-  repeatedCharArray[width] = [endChar]
+  repeatedCharArray[width-1] = [endChar]
   for(let i=1; i<width-1; i++) {
     repeatedCharArray[i]=midChar;
   }
@@ -41,4 +41,4 @@ const printFilledRectangle = function(width,height) {
 
 exports.createFilledRect = createFilledRect;
 
-printFilledRectangle(5,5);
+//printFilledRectangle(5,5);
