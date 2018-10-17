@@ -39,12 +39,31 @@ const createFilledRect = function(width,height) {
   return filledRectArray;
 }
 
+//----------------------creating alternating rectangle------------------------------
+
+const createAlternatingRect = function(width,height) {
+  let alternatingRectArray = [];
+  for(let i=0; i<height;) {
+    alternatingRectArray[i] = createLine(width,'*','*','*');
+    i++;
+    if(i<height) {
+      alternatingRectArray[i] = createLine(width,'-','-','-');
+      i++;
+    }
+  }
+  return alternatingRectArray;
+}
+
 //-------------------------drawing the rectangle------------------------------------
 
-const printFilledRectangle = function(width,height) {
-  let filledRectangleArray = createFilledRect(width,height);
-  for(let i=0; i<filledRectangleArray.length; i++) {
-    console.log(filledRectangleArray[i]);
+const drawRectangle = function(width,height,pattern) {
+  let rectangle={};
+  rectangle['filled']=createFilledRect(width,height);
+  rectangle['empty']=createEmptyRectangle(width,height);
+  rectangle['alternating']=createAlternatingRect(width,height);
+
+  for(let i=0; i<rectangle[pattern].length; i++) {
+    console.log(rectangle[pattern][i]);
   }
   return;
 }
@@ -65,4 +84,4 @@ const createEmptyRectangle = function(width,height) {
 
 exports.createEmptyRect = createEmptyRectangle;
 
-//printFilledRectangle(5,5);
+drawRectangle(5,5,'alternating');
