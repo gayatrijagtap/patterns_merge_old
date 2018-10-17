@@ -2,8 +2,8 @@
 
 const insertChar = function(width,startChar,midChar,endChar) {
   let repeatedCharArray = [];
-  repeatedCharArray[0] = [startChar];
-  repeatedCharArray[width-1] = [endChar]
+  repeatedCharArray[0] = startChar;
+  repeatedCharArray[width-1] = endChar;
   for(let i=1; i<width-1; i++) {
     repeatedCharArray[i]=midChar;
   }
@@ -54,6 +54,8 @@ const createAlternatingRect = function(width,height) {
   return alternatingRectArray;
 }
 
+exports.createAlternatingRect=createAlternatingRect;
+
 //-------------------------drawing the rectangle------------------------------------
 
 const drawRectangle = function(width,height,pattern) {
@@ -84,4 +86,34 @@ const createEmptyRectangle = function(width,height) {
 
 exports.createEmptyRect = createEmptyRectangle;
 
-drawRectangle(5,5,'alternating');
+//-----------------------creating left triangle----------------------------
+
+const createLeftTriangle = function(height) {
+  let leftTringle = [];
+  for(let i=0; i<height; i++) {
+    leftTringle[i] = createLine(i+1,'*','*','*');
+  }
+  return leftTringle;
+}
+
+exports.createLeftTriangle = createLeftTriangle;
+
+//-----------------------creating right triangle-----------------------------
+
+const createRightTriangle = function(height) {
+  let rightTriangle = [];
+  for(let i=1; i<height; i++) {
+    let blanks = height-i;
+    rightTriangle[i-1] = createLine(blanks,' ',' ',' ').concat(createLine(i,'*','*','*'));
+  }
+  rightTriangle[height-1] = createLine(height,'*','*','*');
+  return rightTriangle;
+}
+
+exports.createRightTriangle = createRightTriangle;
+
+console.log(createRightTriangle(6));
+
+//console.log(insertChar(6,'*','*','*'));
+
+//drawRectangle(5,5,'alternating');
