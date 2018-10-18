@@ -1,29 +1,29 @@
 //----------------------inserting characters in an array------------------------
 
-const insertChar = function(width,startChar,midChar,endChar) {
-  let repeatedCharArray = [];
-  repeatedCharArray[0] = startChar;
-  repeatedCharArray[width-1] = endChar;
-  for(let i=1; i<width-1; i++) {
-    repeatedCharArray[i]=midChar;
+const insertChar = function( width,startChar,midChar,endChar ) {
+  let insertedCharacters = [];
+  insertedCharacters[0] = startChar;
+  insertedCharacters[ width-1 ] = endChar;
+  for ( let index = 1; index < width-1; index++ ) {
+    insertedCharacters[ index ] = midChar;
   }
-  return repeatedCharArray;
+  return insertedCharacters;
 }
 
 exports.insertChar = insertChar;
 
 //----------------------join the characters------------------------
 
-const joinCharacters = function(repeatedCharArray) {
-  let joinedChars = repeatedCharArray.join('');
-  return joinedChars;
+const joinCharacters = function( insertedCharacters ) {
+  let joinedCharacters = insertedCharacters.join('');
+  return joinedCharacters;
 }
 
 //---------------------------creating a single line-------------------------
 
-const createLine = function(width,startChar,midChar,endChar) {
-  let repeatedCharArray = insertChar(width,startChar,midChar,endChar);
-  let line = joinCharacters(repeatedCharArray);
+const createLine = function( width,startChar,midChar,endChar ) {
+  let insertedCharacters = insertChar( width,startChar,midChar,endChar );
+  let line = joinCharacters( insertedCharacters );
   return line;
 }
 
@@ -31,67 +31,68 @@ exports.createLine = createLine;
 
 //----------------------creating filled rectangle------------------------------
 
-const createFilledRect = function(width,height) {
-  let filledRectArray = [];
-  for(let i=0; i<height; i++) {
-    filledRectArray[i] = createLine(width,'*','*','*');
+const createFilledRectangle = function( width,height ) {
+  let filledRectangle = [];
+  for ( let index = 0; index < height; index++ ) {
+    filledRectangle[ index ] = createLine( width,'*','*','*' );
   }
-  return filledRectArray;
+  return filledRectangle;
 }
+
+exports.createFilledRect = createFilledRectangle;
 
 //----------------------creating alternating rectangle------------------------------
 
-const createAlternatingRect = function(width,height) {
-  let alternatingRectArray = [];
-  for(let i=0; i<height;) {
-    alternatingRectArray[i] = createLine(width,'*','*','*');
-    i++;
-    if(i<height) {
-      alternatingRectArray[i] = createLine(width,'-','-','-');
-      i++;
+const createAlternatingRectangle = function( width,height ) {
+  let alternatingRectangle = [];
+  for ( let index = 0; index < height; ) {
+    alternatingRectangle[ index ] = createLine( width,'*','*','*' );
+    index++;
+    if ( index < height ) {
+      alternatingRectangle[ index ] = createLine( width,'-','-','-' );
+      index++;
     }
   }
-  return alternatingRectArray;
+  return alternatingRectangle;
 }
 
-exports.createAlternatingRect=createAlternatingRect;
+exports.createAlternatingRect=createAlternatingRectangle;
 
 //-------------------------drawing the rectangle------------------------------------
 
-const drawRectangle = function(width,height,pattern) {
-  let rectangle={};
-  rectangle['filled']=createFilledRect(width,height);
-  rectangle['empty']=createEmptyRectangle(width,height);
-  rectangle['alternating']=createAlternatingRect(width,height);
+const drawRectangle = function( width,height,type ) {
+  let rectangle = {};
+  rectangle[ 'filled' ] = createFilledRectangle( width,height );
+  rectangle[ 'empty' ] = createEmptyRectangle( width,height );
+  rectangle[ 'alternating' ] = createAlternatingRectangle( width,height );
 
-  for(let i=0; i<rectangle[pattern].length; i++) {
-    console.log(rectangle[pattern][i]);
+  for ( let index = 0; index < rectangle[ type ].length; index++ ) {
+    console.log( rectangle[ type ][ index ] );
   }
   return;
 }
 
-exports.createFilledRect = createFilledRect;
 
 //----------------------creating filled rectangle------------------------------
 
-const createEmptyRectangle = function(width,height) {
-  let emptyRectArray = [];
-  emptyRectArray[0] = createLine(width,'*','*','*');
-  emptyRectArray[height-1] = createLine(width,'*','*','*');
-  for(let i=1; i<height-1; i++) {
-  emptyRectArray[i] = createLine(width,'*',' ','*');
+const createEmptyRectangle = function( width,height ) {
+  let emptyRectangle = [];
+  emptyRectangle[0] = createLine( width,'*','*','*' );
+  emptyRectangle[ height-1 ] = createLine( width,'*','*','*' );
+  for ( let index = 1; index < height-1; index++ ) {
+    emptyRectangle[ index ] = createLine( width,'*',' ','*' );
   }
-  return emptyRectArray;
+  return emptyRectangle;
 }
 
 exports.createEmptyRect = createEmptyRectangle;
 
 //-----------------------creating left triangle----------------------------
 
-const createLeftTriangle = function(height) {
+const createLeftTriangle = function( height ) {
   let leftTringle = [];
-  for(let i=0; i<height; i++) {
-    leftTringle[i] = createLine(i+1,'*','*','*');
+  for ( let index = 0; index < height; index++ ) {
+    leftTringle[ index ] = createLine( index+1,'*','*','*' );
   }
   return leftTringle;
 }
@@ -100,19 +101,19 @@ exports.createLeftTriangle = createLeftTriangle;
 
 //-----------------------creating right triangle-----------------------------
 
-const createRightTriangle = function(height) {
+const createRightTriangle = function( height ) {
   let rightTriangle = [];
-  for(let i=1; i<height; i++) {
-    let blanks = height-i;
-    rightTriangle[i-1] = createLine(blanks,' ',' ',' ').concat(createLine(i,'*','*','*'));
+  for ( let index = 1; index < height; index++ ) {
+    let spaces = height - index;
+    rightTriangle[ index - 1 ] = createLine( spaces,' ',' ',' ' ).concat( createLine( index,'*','*','*' ) );
   }
-  rightTriangle[height-1] = createLine(height,'*','*','*');
+  rightTriangle[ height-1 ] = createLine( height,'*','*','*' );
   return rightTriangle;
 }
 
 exports.createRightTriangle = createRightTriangle;
 
-console.log(createRightTriangle(6));
+//console.log(createRightTriangle(6));
 
 //console.log(insertChar(6,'*','*','*'));
 
