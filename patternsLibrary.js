@@ -1,6 +1,7 @@
 //----------------------inserting characters in an array------------------------
 
-const insertChar = function( width,startChar,midChar,endChar ) {
+const insertChar = function( width,lineGenerator ) {
+  let { startChar , midChar, endChar } = lineGenerator;
   let insertedCharacters = [];
   insertedCharacters[0] = startChar;
   insertedCharacters[ width-1 ] = endChar;
@@ -21,8 +22,8 @@ const joinCharacters = function( insertedCharacters ) {
 
 //---------------------------creating a single line-------------------------
 
-const createLine = function( width,startChar,midChar,endChar ) {
-  let insertedCharacters = insertChar( width,startChar,midChar,endChar );
+const createLine = function( width,lineGenerator ) {
+  let insertedCharacters = insertChar( width,lineGenerator );
   let line = joinCharacters( insertedCharacters );
   return line;
 }
@@ -34,7 +35,7 @@ exports.createLine = createLine;
 const createFilledRectangle = function( width,height ) {
   let filledRectangle = [];
   for ( let index = 0; index < height; index++ ) {
-    filledRectangle[ index ] = createLine( width,'*','*','*' );
+    filledRectangle[ index ] = createLine( width,filledLineGenerator );
   }
   return filledRectangle;
 }
@@ -46,10 +47,10 @@ exports.createFilledRect = createFilledRectangle;
 const createAlternatingRectangle = function( width,height ) {
   let alternatingRectangle = [];
   for ( let index = 0; index < height; ) {
-    alternatingRectangle[ index ] = createLine( width,'*','*','*' );
+    alternatingRectangle[ index ] = createLine( width,filledLineGenerator );
     index++;
     if ( index < height ) {
-      alternatingRectangle[ index ] = createLine( width,'-','-','-' );
+      alternatingRectangle[ index ] = createLine( width,dashedLineGenerator );
       index++;
     }
   }
@@ -77,10 +78,10 @@ const drawRectangle = function( width,height,type ) {
 
 const createEmptyRectangle = function( width,height ) {
   let emptyRectangle = [];
-  emptyRectangle[0] = createLine( width,'*','*','*' );
-  emptyRectangle[ height-1 ] = createLine( width,'*','*','*' );
+  emptyRectangle[0] = createLine( width,filledLineGenerator );
+  emptyRectangle[ height-1 ] = createLine( width,filledLineGenerator );
   for ( let index = 1; index < height-1; index++ ) {
-    emptyRectangle[ index ] = createLine( width,'*',' ','*' );
+    emptyRectangle[ index ] = createLine( width,emptyLineGenerator );
   }
   return emptyRectangle;
 }
@@ -92,7 +93,7 @@ exports.createEmptyRect = createEmptyRectangle;
 const createLeftTriangle = function( height ) {
   let leftTringle = [];
   for ( let index = 0; index < height; index++ ) {
-    leftTringle[ index ] = createLine( index+1,'*','*','*' );
+    leftTringle[ index ] = createLine( index+1,filledLineGenerator );
   }
   return leftTringle;
 }
@@ -105,13 +106,31 @@ const createRightTriangle = function( height ) {
   let rightTriangle = [];
   for ( let index = 1; index < height; index++ ) {
     let spaces = height - index;
-    rightTriangle[ index - 1 ] = createLine( spaces,' ',' ',' ' ).concat( createLine( index,'*','*','*' ) );
+    rightTriangle[ index - 1 ] = createLine( spaces,blankLineGenerator ).concat( createLine( index,filledLineGenerator ) );
   }
-  rightTriangle[ height-1 ] = createLine( height,'*','*','*' );
+  rightTriangle[ height-1 ] = createLine( height,filledLineGenerator );
   return rightTriangle;
 }
 
 exports.createRightTriangle = createRightTriangle;
+
+//------------------------------create Line Generator-----------------------------
+
+const createLineGenerator = function( startChar,midChar,endChar ) {
+  let lineGenerator = {  
+                        startChar : startChar ,
+                        midChar : midChar ,
+                        endChar : endChar
+                      };
+  return lineGenerator;
+}
+
+//--------------------------------Line Generators------------------------------------
+
+let filledLineGenerator = createLineGenerator( '*','*','*' );
+let emptyLineGenerator = createLineGenerator( '*',' ','*' );
+let dashedLineGenerator = createLineGenerator( '-','-','-' );
+let blankLineGenerator = createLineGenerator( ' ',' ',' ' );
 
 //console.log(createRightTriangle(6));
 
