@@ -1,6 +1,4 @@
 const assert = require('assert');
-const repeatChar = require('../repeatCharLib.js').repeatChar;
+const insertChar = require('../patternsLibrary.js').insertChar;
 
-assert.deepEqual(repeatChar(0,1,'*'),['*']);
-assert.deepEqual(repeatChar(0,2,'#'),['#','#']);
-assert.deepEqual(repeatChar(0,5,'&'),['&','&','&','&','&']);
+assert.deepEqual(insertChar(1,'*','*','*'),[['*']]);

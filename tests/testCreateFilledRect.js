@@ -1,5 +1,5 @@
 const assert = require('assert');
-const createFilledRect = require('../repeatCharLib.js').createFilledRect;
+const createFilledRect = require('../patternsLibrary.js').createFilledRect;
 
 assert.deepEqual(createFilledRect(5,5),['*****','*****','*****','*****','*****']);
 assert.deepEqual(createFilledRect(2,2),['**','**']);

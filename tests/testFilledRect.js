@@ -1,4 +1,4 @@
 const assert = require('assert');
-const filledRectangle = require('../patternsLibrary.js').filledRectangle;
+const filledRectangle = require('../patternsLibrary.js').createFilledRect;
 
-assert.equal(filledRectangle(2,2),'**\n**\n');
+assert.deepEqual(filledRectangle(2,2),['**','**']);
