@@ -59,6 +59,25 @@ const createAlternatingRectangle = function( width,height ) {
 
 exports.createAlternatingRect=createAlternatingRectangle;
 
+//---------------------------merging patterns---------------------------------------
+
+const mergePatterns = function( height1,width1,height2,width2 ) {
+ // let patternsInfo = {
+ //                     height1:height1, width1:width1,
+ //                     height2:height2, width2:width2
+ // };
+  let filledRectangle = createFilledRectangle( height1,width1 );
+  let rightTriangle = createRightTriangle( height2 );
+  for (let index = 0; index < height1; index++) {
+    console.log( filledRectangle[ index ]," ",rightTriangle[ index ] );
+  }
+  return;
+}
+
+//---------------------------getting patterns information----------------------------
+
+//const getPatternInfo = function(pattern1,height,width,pattern2,height,width)
+
 //-------------------------drawing the rectangle------------------------------------
 
 const drawRectangle = function( width,height,type ) {
@@ -114,6 +133,19 @@ const createRightTriangle = function( height ) {
 
 exports.createRightTriangle = createRightTriangle;
 
+//--------------------------------filled Diamond----------------------------------
+
+//const createFilledDiamond = function( height ) {
+//  let middle = Math.ceil(height/2);
+//  let filledDiamond = [];
+  
+//}
+
+//exports.createFilledDiamond = createFilledDiamond;
+
+//-------------------------diamond upperHalf-----------------------------------
+
+
 //------------------------------create Line Generator-----------------------------
 
 const createLineGenerator = function( startChar,midChar,endChar ) {
@@ -132,8 +164,6 @@ let emptyLineGenerator = createLineGenerator( '*',' ','*' );
 let dashedLineGenerator = createLineGenerator( '-','-','-' );
 let blankLineGenerator = createLineGenerator( ' ',' ',' ' );
 
-//console.log(createRightTriangle(6));
+//--------------------------------------draw merged patterns------------------------------
 
-//console.log(insertChar(6,'*','*','*'));
-
-//drawRectangle(5,5,'alternating');
+mergePatterns(5,5,5);
