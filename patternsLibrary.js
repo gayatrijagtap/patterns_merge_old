@@ -61,37 +61,33 @@ exports.createAlternatingRect=createAlternatingRectangle;
 
 //---------------------------merging patterns---------------------------------------
 
-const mergePatterns = function( height1,width1,height2,width2 ) {
- // let patternsInfo = {
- //                     height1:height1, width1:width1,
- //                     height2:height2, width2:width2
- // };
-  let filledRectangle = createFilledRectangle( height1,width1 );
-  let rightTriangle = createRightTriangle( height2 );
-  for (let index = 0; index < height1; index++) {
-    console.log( filledRectangle[ index ]," ",rightTriangle[ index ] );
+const mergePatterns = function( patternInfo ) { 
+  let { type1,type2,height,width } = patternInfo;
+  let pattern = {};
+  pattern['filledRectangle'] = createFilledRectangle( height,width );
+  pattern['emptyRectangle'] = createEmptyRectangle( height,width );
+  pattern['alternatingRectangle'] = createAlternatingRectangle( height,width );
+  let mergedPatterns = [];
+
+  for (let index = 0; index < height; index++) {
+    mergedPatterns[ index ] =pattern [type1][ index ]+" "+pattern[ type2 ][ index ];
   }
-  return;
+  return mergedPatterns;
 }
+
+exports.mergePatterns = mergePatterns;
 
 //---------------------------getting patterns information----------------------------
 
-//const getPatternInfo = function(pattern1,height,width,pattern2,height,width)
-
-//-------------------------drawing the rectangle------------------------------------
-
-const drawRectangle = function( width,height,type ) {
-  let rectangle = {};
-  rectangle[ 'filled' ] = createFilledRectangle( width,height );
-  rectangle[ 'empty' ] = createEmptyRectangle( width,height );
-  rectangle[ 'alternating' ] = createAlternatingRectangle( width,height );
-
-  for ( let index = 0; index < rectangle[ type ].length; index++ ) {
-    console.log( rectangle[ type ][ index ] );
-  }
-  return;
+const getPatternInfo = function(pattern1,pattern2,height,width) {
+  let patternInfo = {
+                      type1 : pattern1,
+                      type2 : pattern2,
+                      height : height,
+                      width : width
+  };
+  return mergePatterns(patternInfo);
 }
-
 
 //----------------------creating filled rectangle------------------------------
 
@@ -133,19 +129,6 @@ const createRightTriangle = function( height ) {
 
 exports.createRightTriangle = createRightTriangle;
 
-//--------------------------------filled Diamond----------------------------------
-
-//const createFilledDiamond = function( height ) {
-//  let middle = Math.ceil(height/2);
-//  let filledDiamond = [];
-  
-//}
-
-//exports.createFilledDiamond = createFilledDiamond;
-
-//-------------------------diamond upperHalf-----------------------------------
-
-
 //------------------------------create Line Generator-----------------------------
 
 const createLineGenerator = function( startChar,midChar,endChar ) {
@@ -165,5 +148,3 @@ let dashedLineGenerator = createLineGenerator( '-','-','-' );
 let blankLineGenerator = createLineGenerator( ' ',' ',' ' );
 
 //--------------------------------------draw merged patterns------------------------------
-
-mergePatterns(5,5,5);
